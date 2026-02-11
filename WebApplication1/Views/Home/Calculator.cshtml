@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Create / Edit";
+}
+
+@model Calculator.Models.Calc
+
+<div class="text-center">
+    <h1 class="display-4">LA CALCULADORA</h1>
+
+</div>
+
+<form method="get" asp-controller="Home">
+    <label class="mt-4">Numerator</label>
+    <input class="form-control" type="number" placeholder="enter number" asp-for="numerator" />
+    <label class="mt-4">Denominator</label>
+    <input class="form-control" type="number" placeholder="enter number" asp-for="denominator" />
+
+    @*try single action using single form using listener*@
+
+    <button type="submit" formaction="@Url.Action("Calcadd","Home")" class="btn btn-primary mt-4">+</button>
+    <button type="submit" formaction="@Url.Action("Calcsub","Home")" class="btn btn-primary mt-4">-</button>
+    <button type="submit" formaction="@Url.Action("Calcmul","Home")" class="btn btn-primary mt-4">x</button>
+    <button type="submit" formaction="@Url.Action("Calcdiv","Home")" class="btn btn-primary mt-4">/</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Result
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@ViewBag.result</td>
+        </tr>
+    </tbody>
+</table>

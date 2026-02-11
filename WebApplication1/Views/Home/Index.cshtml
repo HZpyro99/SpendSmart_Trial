@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Your Expense Tracker and Handy Calculator all in one</p>
+    <a asp-controller="Home" asp-action="Expenses" class="btn btn-primary">Overview</a>
+    <a asp-controller="Home" asp-action="CreateEditExpense" class="btn btn-secondary">Creater New</a>
+    <a asp-controller="Home" asp-action="Calculator" class="btn btn-success">Calculator</a>
+</div>

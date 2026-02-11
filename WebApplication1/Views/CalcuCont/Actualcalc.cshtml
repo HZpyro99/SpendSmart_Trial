@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Actualcalc";
+}
+@model ActualCalculator.Models.Calcu
+
+<div class="text-center">
+    <h1 class="display-4">Calculator</h1>
+    <p></p>Actual Calculator</p>
+</div>
+
+<div sclass="d-flex justify-content-center">
+    <table>
+        <tr>
+            <td colspan="4">
+                <input class="form-control" type="text" placeholder="0" value="@ViewBag.Display" disabled />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <input class="form-control" type="text" placeholder="0" value="@ViewBag.Display2" disabled />
+            </td>
+        </tr>
+    </table>
+
+    <button class="btn btn-outline-dark mt-4" type="submit" value="7" name="but">7</button>
+    <button class="btn btn-outline-dark mt-4" type="submit" value="8" name="but">8</button>
+    <button class="btn btn-outline-dark mt-4" type="submit" value="9" name="but">9</button>
+    <button class="btn btn-outline-dark mt-4" type="submit" value="X" name="but">X</button>
+    <br />
+    <button class="btn btn-outline-dark mt-4" type="submit" value="4" name="but">4</button>
+    <button class="btn btn-outline-dark mt-4" type="submit" value="5" name="but">5</button>
+    <button class="btn btn-outline-dark mt-4" type="submit" value="3" name="but">6</button>
+    <button class="btn btn-outline-dark mt-4" type="submit" value="Sub" name="but">-</button>
+    <br />
+    <button class="btn btn-outline-dark mt-4" type="submit" value="1" name="but">1</button>
+    <button class="btn btn-outline-dark mt-4" type="submit" value="2" name="but">2</button>
+    <button class="btn btn-outline-dark mt-4" type="submit" value="3" name="but">3</button>
+    <button class="btn btn-outline-dark mt-4" type="submit" value="add" name="but">+</button>
+    <br />
+    <button class="btn btn-outline-dark mt-4" type="submit" value="0" name="but">0</button>
+    <button class="btn btn-outline-dark mt-4" type="submit" value="div" name="but">/</button>
+    <button class="btn btn-outline-dark mt-4" type="submit" value="eq" name="but">=</button>
+    <button class="btn btn-outline-dark mt-4" type="submit" value="clr" name="but">CE</button>
+</div>
