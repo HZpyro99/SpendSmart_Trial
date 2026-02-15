@@ -12,40 +12,43 @@
     <p></p>Actual Calculator</p>
 </div>
 
-<div class="text-center d-flex justify-content-center">
-    <table>
-        <tr>
-            <td colspan="4">
-                <input type="text" id="myTextbox" placeholder="0" disabled>
-            </td>
-    </table>
-</div>
+<form asp-action="ActualCalc" method="post">
+    <div class="text-center d-flex justify-content-center">
+        <table>
+            <tr>
+                <td colspan="4">
+                    <input asp-for="Expression" id="myTextbox" class="form-control text-center" placeholder="0" readonly />
 
-<div class="text-center justify-content-center align-items-baseline">
-    
-    <button class="btn btn-outline-dark mt-4" onclick="setValue('7')">7</button>
-    <button class="btn btn-outline-dark mt-4" onclick="setValue('8')">8</button>
-    <button class="btn btn-outline-dark mt-4" onclick="setValue('9')">9</button>
-    <button class="btn btn-outline-dark mt-4" onclick="setValue('+')">+</button>
-    <br />
-    <button class="btn btn-outline-dark mt-4" onclick="setValue('4')">4</button>
-    <button class="btn btn-outline-dark mt-4" onclick="setValue('5')">5</button>
-    <button class="btn btn-outline-dark mt-4" onclick="setValue('6')">6</button>
-    <button class="btn btn-outline-dark mt-4" onclick="setValue('-')">-</button>
-    <br />
-    <button class="btn btn-outline-dark mt-4" onclick="setValue('1')">1</button>
-    <button class="btn btn-outline-dark mt-4" onclick="setValue('2')">2</button>
-    <button class="btn btn-outline-dark mt-4" onclick="setValue('3')">3</button>
-    <button class="btn btn-outline-dark mt-4" onclick="setValue('*')">*</button>
-    <br />
-    <button class="btn btn-outline-dark mt-4" onclick="setValue('0')">0</button>
-    <button class="btn btn-outline-dark mt-4" onclick="setValue('/')">/</button>
-    <button class="btn btn-outline-warning mt-4" onclick="clearsingleValue('C')">C</button>
-    <button class="btn btn-outline-danger mt-4" onclick="clearValue('CE')">CE</button>
-    <br />
-    <button class="btn btn-outline-success mt-4" onclick="calculate('eq')">=</button>
+                </td>
+        </table>
+    </div>
 
-</div>
+    <div class="text-center justify-content-center align-items-baseline">
+
+        <button type ="button" class="btn btn-outline-dark mt-4" onclick="setValue('7')">7</button>
+        <button type="button" class="btn btn-outline-dark mt-4" onclick="setValue('8')">8</button>
+        <button type="button" class="btn btn-outline-dark mt-4" onclick="setValue('9')">9</button>
+        <button type="button" class="btn btn-outline-dark mt-4" onclick="setValue('+')">+</button>
+        <br />
+        <button type="button" class="btn btn-outline-dark mt-4" onclick="setValue('4')">4</button>
+        <button type="button" class="btn btn-outline-dark mt-4" onclick="setValue('5')">5</button>
+        <button type="button" class="btn btn-outline-dark mt-4" onclick="setValue('6')">6</button>
+        <button type="button" class="btn btn-outline-dark mt-4" onclick="setValue('-')">-</button>
+        <br />
+        <button type="button" class="btn btn-outline-dark mt-4" onclick="setValue('1')">1</button>
+        <button type="button" class="btn btn-outline-dark mt-4" onclick="setValue('2')">2</button>
+        <button type="button" class="btn btn-outline-dark mt-4" onclick="setValue('3')">3</button>
+        <button type="button" class="btn btn-outline-dark mt-4" onclick="setValue('*')">*</button>
+        <br />
+        <button type="button" class="btn btn-outline-dark mt-4" onclick="setValue('0')">0</button>
+        <button type="button" class="btn btn-outline-dark mt-4" onclick="setValue('/')">/</button>
+        <button type="button" class="btn btn-outline-warning mt-4" onclick="clearsingleValue('C')">C</button>
+        <button type="button" class="btn btn-outline-danger mt-4" onclick="clearValue('CE')">CE</button>
+        <br />
+        <button type="submit" class="btn btn-outline-success mt-4">=</button>
+
+    </div>
+</form>
 
 <script>
     function setValue(value) {
@@ -59,23 +62,5 @@
 
     function clearValue(value) {
         document.getElementById("myTextbox").value = "";
-    }
-
-    function calculate(value) {
-        var expression = document.getElementById("myTextbox").value
-        var result = eval(expression)
-        document.getElementById("myTextbox").value = result
-        if (result == undefined) {
-        document.getElementById("myTextbox").value = "Error"
-        }
-        else if (result == Infinity) {
-            document.getElementById("myTextbox").value = "Error"
-        }
-        else if (result == -Infinity) {
-            document.getElementById("myTextbox").value = "Error"
-        }
-        else if (result == null) {
-            document.getElementById("myTextbox").value = "Error"
-        }
     }
 </script>
