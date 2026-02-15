@@ -4,10 +4,10 @@ namespace Calculator.Models
 {
     public class Calc
     {
-        public int result { get; set; }
+        public decimal result { get; set; }
    
-        public int numerator { get; set; }
+        public decimal numerator { get; set; }
 
-        public int denominator { get; set; }
+        public decimal denominator { get; set; }
     }
 }

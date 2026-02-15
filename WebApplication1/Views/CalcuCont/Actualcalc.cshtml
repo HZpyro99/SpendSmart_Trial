@@ -4,49 +4,78 @@
 @{
     ViewData["Title"] = "Actualcalc";
 }
-@model ActualCalculator.Models.Calcu
+@model ActualCalculator.Models.Calcu  
 
-<div class="text-center">
+
+<div class="text-center justify-content-center">
     <h1 class="display-4">Calculator</h1>
     <p></p>Actual Calculator</p>
 </div>
 
-<div sclass="d-flex justify-content-center">
+<div class="text-center d-flex justify-content-center">
     <table>
         <tr>
             <td colspan="4">
-                <input class="form-control" type="text" placeholder="0" value="@ViewBag.Display" disabled />
+                <input type="text" id="myTextbox" placeholder="0" disabled>
             </td>
-        </tr>
-        <tr>
-            <td colspan="4">
-                <input class="form-control" type="text" placeholder="0" value="@ViewBag.Display2" disabled />
-            </td>
-        </tr>
     </table>
-
-
-    <br />
-<button onclick="setValue('C')">Set C</button>
-<button onclick="setValue('CE')">Set CE</button>>
-<br />
-<button onclick="setValue('7')">Set 7</button>
-<button onclick="setValue('8')">Set 8</button>
-<button onclick="setValue('9')">Set 9</button>
-<button onclick="setValue('+')">Set +</button>
-<br />
-<button onclick="setValue('4')">Set 4</button>
-<button onclick="setValue('5')">Set 5</button>
-<button onclick="setValue('6')">Set 6</button>
-<button onclick="setValue('-')">Set -</button>
-    <br />
-    <button class="btn btn-outline-dark mt-4" type="submit" value="1" name="but">1</button>
-    <button class="btn btn-outline-dark mt-4" type="submit" value="2" name="but">2</button>
-    <button class="btn btn-outline-dark mt-4" type="submit" value="3" name="but">3</button>
-    <button class="btn btn-outline-dark mt-4" type="submit" value="add" name="but">+</button>
-    <br />
-    <button class="btn btn-outline-dark mt-4" type="submit" value="0" name="but">0</button>
-    <button class="btn btn-outline-dark mt-4" type="submit" value="div" name="but">/</button>
-    <button class="btn btn-outline-dark mt-4" type="submit" value="eq" name="but">=</button>
-    <button class="btn btn-outline-dark mt-4" type="submit" value="clr" name="but">CE</button>
 </div>
+
+<div class="text-center justify-content-center align-items-baseline">
+    
+    <button class="btn btn-outline-dark mt-4" onclick="setValue('7')">7</button>
+    <button class="btn btn-outline-dark mt-4" onclick="setValue('8')">8</button>
+    <button class="btn btn-outline-dark mt-4" onclick="setValue('9')">9</button>
+    <button class="btn btn-outline-dark mt-4" onclick="setValue('+')">+</button>
+    <br />
+    <button class="btn btn-outline-dark mt-4" onclick="setValue('4')">4</button>
+    <button class="btn btn-outline-dark mt-4" onclick="setValue('5')">5</button>
+    <button class="btn btn-outline-dark mt-4" onclick="setValue('6')">6</button>
+    <button class="btn btn-outline-dark mt-4" onclick="setValue('-')">-</button>
+    <br />
+    <button class="btn btn-outline-dark mt-4" onclick="setValue('1')">1</button>
+    <button class="btn btn-outline-dark mt-4" onclick="setValue('2')">2</button>
+    <button class="btn btn-outline-dark mt-4" onclick="setValue('3')">3</button>
+    <button class="btn btn-outline-dark mt-4" onclick="setValue('*')">*</button>
+    <br />
+    <button class="btn btn-outline-dark mt-4" onclick="setValue('0')">0</button>
+    <button class="btn btn-outline-dark mt-4" onclick="setValue('/')">/</button>
+    <button class="btn btn-outline-warning mt-4" onclick="clearsingleValue('C')">C</button>
+    <button class="btn btn-outline-danger mt-4" onclick="clearValue('CE')">CE</button>
+    <br />
+    <button class="btn btn-outline-success mt-4" onclick="calculate('eq')">=</button>
+
+</div>
+
+<script>
+    function setValue(value) {
+        document.getElementById("myTextbox").value += value;
+    }
+
+    function clearsingleValue(value) {
+        var currentValue = document.getElementById("myTextbox").value;
+        document.getElementById("myTextbox").value = currentValue.slice(0, -1);
+    }
+
+    function clearValue(value) {
+        document.getElementById("myTextbox").value = "";
+    }
+
+    function calculate(value) {
+        var expression = document.getElementById("myTextbox").value
+        var result = eval(expression)
+        document.getElementById("myTextbox").value = result
+        if (result == undefined) {
+        document.getElementById("myTextbox").value = "Error"
+        }
+        else if (result == Infinity) {
+            document.getElementById("myTextbox").value = "Error"
+        }
+        else if (result == -Infinity) {
+            document.getElementById("myTextbox").value = "Error"
+        }
+        else if (result == null) {
+            document.getElementById("myTextbox").value = "Error"
+        }
+    }
+</script>

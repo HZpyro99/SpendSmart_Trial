@@ -80,32 +80,32 @@ namespace WebApplication1.Controllers
         public IActionResult Calcadd(Calc model)
         {
             model.result = model.numerator + model.denominator;
-            ViewBag.result = model.result;
+            ViewBag.result = model.result.ToString("F2");
             return View("Calculator", model);
         }
 
         public IActionResult Calcsub(Calc model)
         {
             model.result = model.numerator - model.denominator;
-            ViewBag.result = model.result;
+            ViewBag.result = model.result.ToString("F2");
             return View("Calculator", model);
         }
 
         public IActionResult Calcmul(Calc model)
         {
             model.result = model.numerator * model.denominator;
-            ViewBag.result = model.result;
+            ViewBag.result = model.result.ToString("F2");
             return View("Calculator", model);
         }
         public IActionResult Calcdiv(Calc model)
         {
             if (model.denominator == 0)
             {
-                ViewBag.ErrorMessage = "Denominator cannot be zero.";
+                ViewBag.result = "Denominator cannot be zero.";
                 return View("Calculator");
             }
             model.result = model.numerator / model.denominator;
-            ViewBag.ErrorMessage = model.result;
+            ViewBag.result = model.result.ToString("F2");
             return View("Calculator", model);
         }
 
