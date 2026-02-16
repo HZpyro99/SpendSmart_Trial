@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+// This class represents the model for the calculator, containing the expression to be evaluated and the resulting value. It is used to pass data between the view and the controller in an ASP.NET MVC application.
 namespace ActualCalculator.Models
 {
     public class Calcu
@@ -10,5 +11,3 @@ namespace ActualCalculator.Models
         
     }
 }
-//1st step create a script that triggers when button is pressed and sends the values of
-//numerator, denominator, and the operator to the controller.
