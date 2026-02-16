@@ -12,15 +12,21 @@
     <p></p>Actual Calculator</p>
 </div>
 
-<form asp-action="ActualCalc" method="post">
+<form asp-action="Actualcalc" method="post">
     <div class="text-center d-flex justify-content-center">
         <table>
             <tr>
                 <td colspan="4">
                     <input asp-for="Expression" id="myTextbox" class="form-control text-center" placeholder="0" readonly />
-
                 </td>
+            <tr>
+                <td colspan="4" class="text-center">
+                    <strong>Result: @Model.Value</strong>
+                </td>
+            </tr>
+                    
         </table>
+
     </div>
 
     <div class="text-center justify-content-center align-items-baseline">

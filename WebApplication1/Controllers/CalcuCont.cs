@@ -1,122 +1,142 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ActualCalculator.Models;
-using System.Security.Cryptography.X509Certificates;
+using System.Globalization;
 
 namespace WebApplication1.Controllers
 {
-
-
     public class CalcuCont : Controller
     {
-
         [HttpGet]
         public IActionResult Actualcalc()
         {
-
-            return View();
+            return View(new Calcu());
         }
 
         [HttpPost]
         public IActionResult Actualcalc(Calcu model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (!string.IsNullOrWhiteSpace(model.Expression))
                 {
-                    // TEMPORARY VARIABLES (logic only)
-                    ParseExpression(model.Expression, out var numbers, out var operators);
-                    double value = EvaluatePemdasNoParenNoExp(numbers, operators);
+                    double result = Evaluate(model.Expression);
+                    model.Value = result;
 
-                    model.Result = value.ToString();
+                    model.Expression = result.ToString(CultureInfo.InvariantCulture);
                 }
-                catch
-                {
-                    model.Result = "Error";
-                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
             }
 
             return View(model);
         }
 
-        // ---------------- PARSER ----------------
-        private void ParseExpression(
-            string expression,
-            out List<double> numbers,
-            out List<char> operators)
+        private List<string> Tokenize(string expr)
         {
-            numbers = new List<double>();
-            operators = new List<char>();
+            var tokens = new List<string>();
+            int i = 0;
 
-            string currentNumber = "";
-
-            foreach (char c in expression)
+            while (i < expr.Length)
             {
+                char c = expr[i];
+
+                if (char.IsWhiteSpace(c)) { i++; continue; }
+
                 if (char.IsDigit(c) || c == '.')
                 {
-                    currentNumber += c;
+                    int start = i;
+                    while (i < expr.Length && (char.IsDigit(expr[i]) || expr[i] == '.'))
+                        i++;
+
+                    tokens.Add(expr.Substring(start, i - start));
+                    continue;
                 }
-                else if (c == '+' || c == '-' || c == '*' || c == '/')
+
+                if ("+-*/()".Contains(c))
                 {
-                    numbers.Add(double.Parse(currentNumber));
-                    operators.Add(c);
-                    currentNumber = "";
+                    tokens.Add(c.ToString());
+                    i++;
+                    continue;
                 }
+
+                throw new Exception("Invalid character");
             }
 
-            if (!string.IsNullOrEmpty(currentNumber))
-                numbers.Add(double.Parse(currentNumber));
+            return tokens;
         }
 
-
-        // ---------------- PEMDAS (MD → AS) ----------------
-        private double EvaluatePemdasNoParenNoExp(
-            List<double> numbers,
-            List<char> operators)
+        private int Precedence(string op)
         {
-            // PASS 1: MULTIPLY & DIVIDE
-            for (int i = 0; i < operators.Count; i++)
+            if (op == "+" || op == "-") return 1;
+            if (op == "*" || op == "/") return 2;
+            return 0;
+        }
+
+        private List<string> ToPostfix(List<string> tokens)
+        {
+            var output = new List<string>();
+            var ops = new Stack<string>();
+
+            foreach (var token in tokens)
             {
-                if (operators[i] == '*' || operators[i] == '/')
+                if (double.TryParse(token, out _))
                 {
-                    double left = numbers[i];
-                    double right = numbers[i + 1];
+                    output.Add(token);
+                }
+                else
+                {
+                    while (ops.Count > 0 && Precedence(ops.Peek()) >= Precedence(token))
+                        output.Add(ops.Pop());
 
-                    double result;
-
-                    if (operators[i] == '*')
-                    {
-                        result = left * right;
-                    }
-                    else
-                    {
-                        if (right == 0)
-                            throw new DivideByZeroException();
-
-                        result = left / right;
-                    }
-
-                    numbers[i] = result;
-                    numbers.RemoveAt(i + 1);
-                    operators.RemoveAt(i);
-                    i--;
+                    ops.Push(token);
                 }
             }
 
-            // PASS 2: ADD & SUBTRACT
-            double finalResult = numbers[0];
+            while (ops.Count > 0)
+                output.Add(ops.Pop());
 
-            for (int i = 0; i < operators.Count; i++)
+            return output;
+        }
+
+        private double Evaluate(string expr)
+        {
+            var tokens = Tokenize(expr);
+            var postfix = ToPostfix(tokens);
+
+            ViewBag.DebugTokens = string.Join(" ", tokens);
+            ViewBag.DebugPostfix = string.Join(" ", postfix);
+
+            var stack = new Stack<double>();
+
+            foreach (var token in postfix)
             {
-                if (operators[i] == '+')
-                    finalResult += numbers[i + 1];
+                if (double.TryParse(token, NumberStyles.Float, CultureInfo.InvariantCulture, out double num))
+                {
+                    stack.Push(num);
+                }
                 else
-                    finalResult -= numbers[i + 1];
+                {
+                    double b = stack.Pop();
+                    double a = stack.Pop();
+
+                    double result = token switch
+                    {
+                        "+" => a + b,
+                        "-" => a - b,
+                        "*" => a * b,
+                        "/" => a / b,
+                        _ => throw new Exception("Invalid operator")
+                    };
+
+                    stack.Push(result);
+                }
             }
 
-            return finalResult;
-        }
+            ViewBag.DebugStackCount = stack.Count;
+
+            return stack.Pop();
+        }   
     }
 }
-
-

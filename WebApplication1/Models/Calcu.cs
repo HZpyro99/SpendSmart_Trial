@@ -6,7 +6,8 @@ namespace ActualCalculator.Models
     {
         public string Expression { get; set; }
        
-        public string Result { get; set; }
+        public double Value {  get; set; }
+        
     }
 }
 //1st step create a script that triggers when button is pressed and sends the values of
